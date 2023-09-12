@@ -1,0 +1,9 @@
+group: example.digi.dev
+image: silveryfu/phone.v1.example.digi.dev:latest
+imagepull: Always
+kind: Phone
+mounter: true
+name: phone
+namespace: default
+plural: phones
+version: v1

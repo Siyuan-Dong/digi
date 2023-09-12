@@ -1,0 +1,11 @@
+apiVersion: mock.digi.dev/v1
+kind: Occupancy
+metadata:
+  name: {{ .Values.name }}
+spec:
+  meta:
+    managed: false
+    gen_interval: -1
+    seed: 42
+  obs:
+    motion_detected: false

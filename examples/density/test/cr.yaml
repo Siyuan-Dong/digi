@@ -1,0 +1,5 @@
+apiVersion: example.digi.dev/v1
+kind: Density
+metadata:
+  name: density
+spec: {}

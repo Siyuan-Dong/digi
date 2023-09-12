@@ -7,10 +7,15 @@ import requests
 import json
 import yaml
 from collections import defaultdict
+from digi.data import logger
+import digi.data.reconcile as reconcile
+import digi
+# import digi.data.reconcile as reconcile
 
 from . import zed, zjson
 
 default_lake_url = os.environ.get("ZED_LAKE", "http://localhost:9867")
+
 
 
 class Sync(threading.Thread):
@@ -31,14 +36,24 @@ class Sync(threading.Thread):
                  lake_url: str = default_lake_url,
                  client: zed.Client = None,
                  min_ts: datetime = datetime.min.replace(tzinfo=timezone.utc),
+                 policies: list = [],
+                 pool2gvr: dict = dict(),
+                 is_ingress: bool = False
                  ):
         assert len(sources) > 0 and dest != ""
         self.sources = self._normalize(sources)
         self.dest = self._normalize_one(dest)
+        logger.info(f"sync: init before")
+        digi.pool.schemas[self.dest]=[]
+        self.policies = policies
+        self.owner = owner
+        self.pool2gvr = pool2gvr
+        self.is_ingress = is_ingress
+        logger.info(f"sync: init after {self.sources}--{self.dest}--{self.owner}, pool2gvr is {pool2gvr}")
         self.in_flow = in_flow  # TBD multi-in_flow
         self.out_flow = out_flow
         self.poll_interval = poll_interval
-        self.owner = owner
+        # self.owner = owner
         self.patch_source = patch_source
         # if eoio enabled, the sync agent will
         # process only those records that contain
@@ -50,12 +65,23 @@ class Sync(threading.Thread):
         self.min_ts = min_ts  # min ts to sync
         self.source_set = set(self.sources)
         self.query_str = self._make_query()
+        # self.policies = []
+        # self.policies = policies
+        # self.policy_keys = []
+        # for policy in policies:
+        #     self.policy_keys.append(extract_key(policy))
+
 
         threading.Thread.__init__(self)
         self._stop_flag = threading.Event()
         self._stop_flag.set()
 
+        # print(f"sync: init dest:{self.dest}")
+        # logger.info(f"sync: init dest:{self.dest}")
+
     def run(self):
+        # print(f"sync: run")
+        # logger.info(f"sync: run")
         self._stop_flag.clear()
 
         self.once()
@@ -65,6 +91,8 @@ class Sync(threading.Thread):
             self._event_loop()
 
     def stop(self):
+        # print(f"sync: stop")
+        # logger.info(f"sync: stop")
         if self._stop_flag.is_set():
             return
 
@@ -72,15 +100,25 @@ class Sync(threading.Thread):
         self.join()
 
     def once(self):
+        # print(f"sync: once")
+        logger.info(f"sync: once {self.sources}--{self.dest}--{self.owner}")
         records = self.read()
+        for record in records:
+            logger.info(f"sync: record received {record} {self.sources}--{self.dest}--{self.owner}")
+            # tmp = self.client.query(f"typeof({record})")
+            # logger.info(f"sync: record type {tmp}")
         if len(records) != 0:
             self.load(records)
 
     def read(self) -> list:
+        # print(f"sync: read")
+        # logger.info(f"sync: read")
         records = list()
         if self.eoio:
             self.query_str = self._make_query()
+        logger.info(f"sync: read query {self.eoio} {self.query_str} {self.sources}--{self.dest}--{self.owner}")
         for r in self.client.query(self.query_str):
+            logger.info(f"sync: r {r} {self.sources}--{self.dest}--{self.owner}")
             if "__from" not in r:
                 records.append(r)
                 continue
@@ -97,8 +135,26 @@ class Sync(threading.Thread):
         return records
 
     def load(self, records: list):
-        records = "\n".join(zjson.encode(records))
+        # print(f"sync: load")
+        # logger.info(f"sync: load {list(records[0].keys())}, type is {type(list(records[0].keys()))}")
         dest_pool, dest_branch = self._denormalize_one(self.dest)
+
+        if not self.is_ingress:
+            tp1, tp2, tp3 = digi.util.get_spec(digi.g, digi.v, digi.r, dest_pool, "default")
+            schemas = tp1['egress'][dest_branch]['schemas']
+            logger.info(f"sync: load {self.sources}--{self.dest}--{self.owner}, schemas are {schemas}")
+
+            for record in records:
+                if list(record.keys()) not in schemas:
+                    logger.info(f"sync: load {self.sources}--{self.dest}--{self.owner} schema of {self.dest} add {list(record.keys())}")
+                    schemas.append(list(record.keys()))
+            tp1['egress'][dest_branch]['schemas'] = schemas
+            resp, e = digi.util.patch_spec(digi.g, digi.v, digi.r, dest_pool, "default", tp1, rv=tp2)
+            if e is not None:
+                logger.warning(f"sync: load {self.sources}--{self.dest}--{self.owner} fail to update schemas {schemas}")
+
+        records = "\n".join(zjson.encode(records))
+        # dest_pool, dest_branch = self._denormalize_one(self.dest)
         self.client.load(
             dest_pool, records,
             branch_name=dest_branch,
@@ -128,8 +184,45 @@ class Sync(threading.Thread):
             time.sleep(self.poll_interval)
 
     def _make_query(self) -> str:
+        # print(f"sync: make query")
+        # logger.info(f"sync: make query {self.sources}--{self.dest}--{self.owner} schemas of {digi.pool.name} are {digi.pool.schemas[self.dest]}")
+        # logger.info(f"sync: make query {self.sources}--{self.dest}--{self.owner} policies are {self.policies}")
+        # recon_flow = f"switch ("
+        # for policy in self.policies:
+        #     policy_key = extract_key(policy)
+        #     for schema in digi.pool.schemas[self.dest]:
+        #         if policy_key in schema:
+        #             recon_flow += f"case {policy} "
+        #             break
+        # if recon_flow == f"switch (":
+        #     new_in_flow = self.in_flow
+        # else:
+        #     new_in_flow = recon_flow + ") | " + self.in_flow
+        # logger.info(f"sync: make query {self.sources}--{self.dest}--{self.owner} new_in_flow {new_in_flow}")
+        new_in_flow = self.in_flow
+
         in_str = "from (\n"
         for source in self.sources:
+            if self.is_ingress:
+                new_in_flow = reconcile.generate_reconcile_flow(self.in_flow, source, self.dest, self.pool2gvr, self.policies)
+                # source_pool, source_branch = self._denormalize_one(source)
+                # g, v, r = self.pool2gvr[source_pool].split("/")
+                # tp1, tp2, tp3 = digi.util.get_spec(g, v, r, source_pool, "default")
+                # logger.info(f"sync: make query {self.sources}--{self.dest}--{self.owner}, spec of {source} is {tp1}")
+                # schemas = tp1['egress'][source_branch]['schemas']
+                # logger.info(f"sync: make query {self.sources}--{self.dest}--{self.owner} schemas of {source} are {schemas}")
+                # logger.info(f"sync: make query {self.sources}--{self.dest}--{self.owner} policies are {self.policies}")
+                # recon_flow = f"switch ("
+                # for policy in self.policies:
+                #     policy_key = reconcile.extract_key(policy)
+                #     for schema in schemas:
+                #         if policy_key in schema:
+                #             recon_flow += f"case {policy} "
+                #             break
+                # if recon_flow != f"switch (":
+                #     new_in_flow = recon_flow + ") | " + self.in_flow
+            logger.info(f"sync: make query {self.sources}--{self.dest}--{self.owner} new_in_flow {new_in_flow}")
+
             cur_ts = max(self.source_ts.get(source, self.min_ts), self.min_ts)
             filter_flow = f"ts > {zjson.encode_datetime(cur_ts)} |" \
                 if self.eoio else ""
@@ -137,7 +230,8 @@ class Sync(threading.Thread):
                 if self.patch_source else ""
             in_str += f"pool {source} => {filter_flow} {patch_source_flow} fork (" \
                       f"=> select max(ts) as max_ts | put __from := '{source}' " \
-                      f"=> {'pass' if self.in_flow == '' else self.in_flow})"
+                      f"=> {'pass' if new_in_flow == '' else new_in_flow})"
+                    #   f"=> {'pass' if self.in_flow == '' else self.in_flow})"
             if len(self.sources) > 1:
                 in_str += "\n"
         in_str += ")\n"  # wrap up from clause
@@ -219,6 +313,8 @@ class Watch(Sync):
                  source_ts=None,
                  min_ts=datetime.min.replace(tzinfo=timezone.utc),
                  *args, **kwargs):
+        # print(f"sync: watch init")
+        # logger.info(f"sync: watch init")
         self.fn = fn
         self.source_ts = source_ts
         self.min_ts = min_ts
@@ -226,6 +322,8 @@ class Watch(Sync):
         super().__init__(dest="none", *args, **kwargs)
 
     def once(self):
+        # print(f"sync: watch once")
+        # logger.info(f"sync: watch once")
         self.fn(self.read())
 
     def _fetch_source_ts(self) -> dict:
@@ -236,6 +334,8 @@ class Watch(Sync):
 
 
 def from_config(path: str) -> Sync:
+    # print(f"sync: from_config")
+    # logger.info(f"sync: from_config")
     with open(path) as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
     return Sync(

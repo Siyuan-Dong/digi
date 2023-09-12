@@ -1,0 +1,9 @@
+group: mock.digi.dev
+image: silveryfu/airport.v1.mock.digi.dev:latest
+imagepull: Always
+kind: Airport
+mounter: true
+name: airport
+namespace: default
+plural: airports
+version: v1

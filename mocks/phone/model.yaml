@@ -1,0 +1,13 @@
+group: mock.digi.dev
+version: v1
+kind: Phone
+ingress:
+  footprint: object
+egress:
+  footprint: object
+  spl: object
+meta:
+  report_interval: number
+mount:
+  mock.digi.dev/v1/lamps: object
+  mock.digi.dev/v1/appliances: object

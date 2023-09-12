@@ -1,0 +1,9 @@
+group: mock.digi.dev
+image: silveryfu/occupancy.v1.mock.digi.dev:latest
+imagepull: Always
+kind: Occupancy
+mounter: false
+name: occupancy
+namespace: default
+plural: occupancies
+version: v1

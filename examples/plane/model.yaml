@@ -1,0 +1,5 @@
+group: example.digi.dev
+version: v1
+kind: Plane
+mount:
+  example.digi.dev/v1/cargos: object

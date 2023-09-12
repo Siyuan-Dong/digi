@@ -1,0 +1,9 @@
+group: example.digi.dev
+image: silveryfu/retail.v1.example.digi.dev:latest
+imagepull: Always
+kind: Retail
+mounter: true
+name: retail
+namespace: default
+plural: retails
+version: v1

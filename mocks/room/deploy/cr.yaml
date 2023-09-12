@@ -1,0 +1,12 @@
+apiVersion: mock.digi.dev/v1
+kind: Room
+metadata:
+  name: {{ .Values.name }}
+spec:
+  meta:
+    managed: false
+    gen_interval: 3
+    seed: 42
+#  egress:
+#    occupancy:
+#      flow: "cut occupancy,event_ts"

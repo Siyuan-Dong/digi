@@ -1,0 +1,13 @@
+apiVersion: example.digi.dev/v1
+kind: Density
+metadata:
+  name: {{ .Values.name }}
+spec:
+  meta:
+    report_interval: 5 # avg
+  egress:
+    count:
+      flow: ""
+    avg_count:
+      flow: "select avg(count) as count"
+      eoio: false

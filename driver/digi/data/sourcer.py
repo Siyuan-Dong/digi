@@ -3,6 +3,7 @@ import inflection
 import requests
 
 import digi
+from digi.data import logger
 
 default_sourcer_url = "http://sourcer:7534/resolve"
 
@@ -61,10 +62,13 @@ def resolve_by_mount(source: typing.Union[dict, str], *,
             # k <-> r can be used interchangeably
             kind = kind_or_name[5:]  # remove "kind:"
             g, v, k = digi.util.parse_kind(kind)
+            logger.info(f"sourcer: kind {kind}, g {g}, v {v}, k {k}")
         else:
             return [f"{kind_or_name}@{egress}"]
     else:
         raise NotImplementedError
+
+    logger.info(f"sourcer: view {digi.model.get()}")
 
     if k == "any":
         mounts = digi.model.get_mount(any=True)
@@ -73,6 +77,8 @@ def resolve_by_mount(source: typing.Union[dict, str], *,
 
     if mounts is None:
         return []
+    
+
     digi.logger.info(f"sourcer: detect matching mounts {mounts} for {source}")
 
     pools = [digi.util.trim_default_namespace(name) for name in mounts.keys()]
@@ -80,5 +86,12 @@ def resolve_by_mount(source: typing.Union[dict, str], *,
 
     # TBD support multiple egresses
     # TBD disallow self-reference
+    # ret_pools = []
+    # ret_gvrs = []
+    # for pool in pools:
+    #     if not exist_only or digi.data.lake.branch_exist(pool, egress):
+    #         ret_pools.append(f"{pool}@{egress}")
+    #         ret_gvrs.append
+
     return [f"{pool}@{egress}" for pool in pools
             if not exist_only or digi.data.lake.branch_exist(pool, egress)]

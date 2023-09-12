@@ -1,0 +1,37 @@
+apiVersion: example.digi.dev/v1
+kind: Room
+metadata:
+  name: {{ .Values.name }}
+spec:
+  meta:
+    auto_brightness: false
+  control:
+    brightness:
+      intent: 1
+    mode:
+      intent: adaptive
+  ingress:
+    device_energy:
+      sources: [ kind:any@energy ]
+      flow: "sort -r event_ts | head"
+      flow_agg: "select sum(watt) as watt"
+      eoio: false
+    # noise pollution: inst. to avg.
+    noise:
+      sources: [ kind:phone@spl ]
+      flow: "sort -r event_ts | head"
+      flow_agg: "select avg(spl) as noise"
+      eoio: false
+  egress:
+    energy:
+      flow: "watt | cut watt,event_ts"
+    occupancy:
+      flow: "cut occupancy,event_ts"
+#      flow: |-
+#        desk_occupancy |
+#        cut desk_occupancy,event_ts |
+#        rename occupancy := desk_occupancy
+    people_count:
+      flow: "num_human | cut num_human,event_ts | rename count:=num_human"
+    noise:
+      flow: "noise | cut noise,event_ts"

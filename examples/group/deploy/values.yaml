@@ -1,0 +1,9 @@
+group: example.digi.dev
+image: silveryfu/group.v1.example.digi.dev:latest
+imagepull: Always
+kind: Group
+mounter: true
+name: group
+namespace: default
+plural: groups
+version: v1

@@ -1,0 +1,9 @@
+group: example.digi.dev
+image: silveryfu/fan.v1.example.digi.dev:latest
+imagepull: Always
+kind: fan
+mounter: false
+name: fan
+namespace: default
+plural: fans
+version: v1

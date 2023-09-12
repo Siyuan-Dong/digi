@@ -1,0 +1,9 @@
+group: example.digi.dev
+image: silveryfu/purifier.v1.example.digi.dev:latest
+imagepull: Always
+kind: Purifier
+mounter: false
+name: purifier
+namespace: default
+plural: purifiers
+version: v1

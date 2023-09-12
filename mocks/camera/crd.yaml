@@ -1,0 +1,29 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: cameras.mock.digi.dev
+spec:
+  group: mock.digi.dev
+  names:
+    kind: camera
+    listKind: cameraList
+    plural: cameras
+    singular: camera
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        properties:
+          apiVersion:
+            type: string
+          kind:
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties: {}
+            type: object
+        type: object
+    served: true
+    storage: true

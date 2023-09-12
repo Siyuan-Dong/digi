@@ -5,6 +5,13 @@ import digi
 class Model():
     def get(self):
         return digi.rc.view()
+    
+    def get_pool2gvr(self):
+        ret = dict()
+        for key, value in digi.rc.view().get("mount", {}).items():
+            for name in value.keys():
+                ret[digi.util.trim_default_namespace(name)] = key
+        return ret
 
     def patch(self, view_or_path, value=None, gen=sys.maxsize):
         """If first arg given is a view patch it directly; if not

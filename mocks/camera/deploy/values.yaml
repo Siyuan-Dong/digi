@@ -1,0 +1,8 @@
+group: mock.digi.dev
+image: silveryfu/camera.v1.mock.digi.dev:latest
+imagepull: Always
+mounter: false
+name: camera
+namespace: default
+plural: cameras
+version: v1

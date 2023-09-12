@@ -1,0 +1,11 @@
+group: mock.digi.dev
+version: v1
+kind: Lamp
+control:
+  power: string
+  brightness: number
+meta:
+  managed: boolean
+  gen_interval: number
+  wattage: number
+  actuation_delay: number

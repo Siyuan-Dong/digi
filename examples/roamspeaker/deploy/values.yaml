@@ -1,0 +1,9 @@
+group: example.digi.dev
+image: silveryfu/roamspeaker.v1.example.digi.dev:latest
+imagepull: Always
+kind: Roamspeaker
+mounter: false
+name: roamspeaker
+namespace: default
+plural: roamspeakers
+version: v1

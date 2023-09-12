@@ -1,0 +1,29 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: voice-assistants.example.digi.dev
+spec:
+  group: example.digi.dev
+  names:
+    kind: Voice-assistant
+    listKind: Voice-assistantList
+    plural: voice-assistants
+    singular: voice-assistant
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        properties:
+          apiVersion:
+            type: string
+          kind:
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties: {}
+            type: object
+        type: object
+    served: true
+    storage: true

@@ -1,0 +1,8 @@
+apiVersion: mock.digi.dev/v1
+kind: Scene
+metadata:
+  name: scene
+spec:
+  data:
+    input:
+      url: rtsp://192.168.1.16/live

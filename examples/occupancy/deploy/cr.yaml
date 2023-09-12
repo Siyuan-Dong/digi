@@ -1,0 +1,8 @@
+apiVersion: example.digi.dev/v1
+kind: Occupancy
+metadata:
+  name: {{ .Values.name }}
+spec:
+  egress:
+    detected:
+      flow: ""

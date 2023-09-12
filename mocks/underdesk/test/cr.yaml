@@ -1,0 +1,5 @@
+apiVersion: mock.digi.dev/v1
+kind: Underdesk
+metadata:
+  name: underdesk
+spec: {}

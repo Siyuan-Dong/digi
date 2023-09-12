@@ -1,0 +1,9 @@
+group: mock.digi.dev
+image: silveryfu/density.v1.mock.digi.dev:latest
+imagepull: Always
+kind: Density
+mounter: false
+name: density
+namespace: default
+plural: densities
+version: v1

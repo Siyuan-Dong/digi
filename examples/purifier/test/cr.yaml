@@ -1,0 +1,5 @@
+apiVersion: example.digi.dev/v1
+kind: Purifier
+metadata:
+  name: purifier
+spec: {}

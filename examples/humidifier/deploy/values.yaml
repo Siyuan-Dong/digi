@@ -1,0 +1,9 @@
+group: example.digi.dev
+image: silveryfu/humidifier.v1.example.digi.dev:latest
+imagepull: Always
+kind: humidifier
+mounter: false
+name: humidifier
+namespace: default
+plural: humidifiers
+version: v1

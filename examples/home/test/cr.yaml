@@ -1,0 +1,8 @@
+apiVersion: example.digi.dev/v1
+kind: Home
+metadata:
+  name: home
+spec:
+  control:
+    mode:
+      intent: smart

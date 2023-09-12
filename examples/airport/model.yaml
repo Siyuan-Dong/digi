@@ -1,0 +1,7 @@
+group: example.digi.dev
+version: v1
+kind: Airport
+egress:
+  delay: object
+mount:
+  example.digi.dev/v1/planes: object

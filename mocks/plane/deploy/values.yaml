@@ -1,0 +1,9 @@
+group: mock.digi.dev
+image: silveryfu/plane.v1.mock.digi.dev:latest
+imagepull: Always
+kind: Plane
+mounter: true
+name: plane
+namespace: default
+plural: planes
+version: v1

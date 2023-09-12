@@ -1,0 +1,12 @@
+group: mock.digi.dev
+version: v1
+kind: Campus
+ingress:
+  energy: object
+  occupancy: object
+egress:
+  energy: object
+  energy_rank: object
+  occupancy: object
+mount:
+  mock.digi.dev/v1/buildings: object

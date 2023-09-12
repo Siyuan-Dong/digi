@@ -1,0 +1,12 @@
+group: example.digi.dev
+version: v1
+kind: Appliance
+control:
+  power: string
+meta:
+  wattage: number
+  unit: string
+obs:
+  watt: number
+egress:
+  energy: object

@@ -1,0 +1,67 @@
+group: example.digi.dev
+version: v1
+kind: Room
+meta:
+  modeConfig:
+    openapi:
+      additionalProperties:
+        properties:
+          power:
+            type: string
+          brightness:
+            type: number
+        type: object
+      type: object
+  report_interval: number
+  auto_brightness: boolean
+  report_overcrowding: boolean
+  capacity: number
+control:
+  brightness: number
+  mode: string
+  ambiance_color: string
+obs:
+  reason: string
+  human_presence: boolean
+  objects:
+    openapi:
+      items:
+        properties:
+          class:
+            type: string
+          name:
+            type: string
+          location:
+            properties:
+              h:
+                type: number
+              w:
+                type: number
+              x1:
+                type: number
+              x2:
+                type: number
+            type: object
+        type: object
+      type: array
+reflex: object
+ingress:
+  device_energy: object
+  occupancy: object
+  desk_occupancy: object
+  noise: object
+egress:
+  energy: object
+  energy_rank: object
+  occupancy: object
+  desk_occupancy: object
+  people_count: object
+  noise: object
+mount:
+  example.digi.dev/v1/lamps: object
+  example.digi.dev/v1/phones: object
+  example.digi.dev/v1/scenes: object
+  example.digi.dev/v1/underdesks: object
+  example.digi.dev/v1/occupancies: object
+  example.digi.dev/v1/densities: object
+  example.digi.dev/v1/appliances: object

@@ -1,0 +1,16 @@
+group: example.digi.dev
+version: v1
+kind: Building
+ingress:
+  energy: object
+  room_occupancy: object
+  occupancy: object
+egress:
+  energy: object
+  energy_rank: object
+  occupancy: object
+mount:
+  example.digi.dev/v1/rooms: object
+  example.digi.dev/v1/groups: object
+  example.digi.dev/v1/floors: object
+  example.digi.dev/v1/phones: object

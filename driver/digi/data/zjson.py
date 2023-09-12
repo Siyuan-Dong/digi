@@ -202,12 +202,23 @@ def _decode_value(typ, value):
 if __name__ == '__main__':
     test = [
         12,
-        {},
+        # {},
+        type(12),
         [],
         {"watt": "12"},
         {"watt": "12", "user": {"alice": True}},
     ]
-    print("\n".join((encode(test))))
+    # print("\n".join((encode(test))))
     # import zed
     # TBD fix zed.py/decoder handle null fields
+    tmp = encode(test)
+    # print("\n".join((tmp)))
+    tp2 = decode_raw(json.loads(line) for line in tmp)
+    # print(type(tp2))
+    for i in tp2:
+        print(i,type(i))
+        if isinstance(i,dict):
+            print("has watt:","watt" in i.keys())
     # print(list(zed.decode_raw(json.loads(line) for line in (encode(test)))))
+    # t1 = '{"type": {"kind": "record", "fields": [{"name": "watt", "type": {"kind": "primitive", "name": "string"}}, {"name": "user", "type": {"kind": "record", "fields": [{"name": "alice", "type": {"kind": "primitive", "name": "bool"}}], "id": 33}}], "id": 34}, "value": ["12", ["true"]]}'
+    # print(list(decode_raw(json.loads(t1))))

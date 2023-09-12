@@ -1,0 +1,10 @@
+apiVersion: mock.digi.dev/v1
+kind: Lamp
+metadata:
+  name: lamp
+spec:
+  control:
+    brightness:
+      intent: 0.1
+    power:
+      intent: "off"

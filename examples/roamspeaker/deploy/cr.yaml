@@ -1,0 +1,5 @@
+apiVersion: example.digi.dev/v1
+kind: roamspeaker
+metadata:
+  name: {{ .Values.name }}
+spec: {}

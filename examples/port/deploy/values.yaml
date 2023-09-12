@@ -1,0 +1,9 @@
+group: example.digi.dev
+image: silveryfu/port.v1.example.digi.dev:latest
+imagepull: Always
+kind: Port
+mounter: true
+name: port
+namespace: default
+plural: ports
+version: v1

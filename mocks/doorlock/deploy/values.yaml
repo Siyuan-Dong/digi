@@ -1,0 +1,8 @@
+group: digi.dev
+image: silveryfu/doorlock.v1.digi.dev:latest
+imagepull: Always
+mounter: false
+name: doorlock
+namespace: default
+plural: doorlocks
+version: v1

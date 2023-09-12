@@ -6,6 +6,7 @@ import kopf
 
 import digi.util as util
 from digi.util import parse_gvr, spaced_name, parse_spaced_name
+from digi.data import logger
 
 """
 An embedded meta-actor that implements the mount semantics.
@@ -84,6 +85,7 @@ class Mounter:
 
     def __init__(self, g, v, r, n, ns="default",
                  log_level=logging.INFO):
+        # logger.info("mount: g {g}, v {v}, r {r}, n {n}, ns {ns}")
 
         """ children event handlers """
 
@@ -229,7 +231,7 @@ class Mounter:
                                 }
                             }
                         }}
-
+                logger.info(f"mount: g {g}, v {v}, r {r}, n {n}, ns {ns}")
                 # maybe rejected if parent has been updated;
                 # continue to try until succeed
                 resp, e = util.patch_spec(g, v, r, n, ns, parent_patch, rv=prv)
@@ -323,6 +325,7 @@ class Mounter:
                         continue
 
                     # TBD: add child event handlers
+                    logger.info(f"mount: g {g}, v {v}, r {r}, n {n}, ns {ns}")
                     self._logger.info(f"new watch for child {nsn_str}")
                     self._children_watches[gvr_str][nsn_str] \
                         = Watch(*gvr, *nsn,

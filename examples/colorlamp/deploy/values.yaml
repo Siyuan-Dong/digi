@@ -1,0 +1,9 @@
+group: example.digi.dev
+image: silveryfu/colorlamp.v1.example.digi.dev:latest
+imagepull: Always
+kind: colorlamp
+mounter: false
+name: colorlamp
+namespace: default
+plural: colorlamps
+version: v1

@@ -1,0 +1,9 @@
+group: mock.digi.dev
+image: silveryfu/phone.v1.mock.digi.dev:latest
+imagepull: Always
+kind: Phone
+mounter: true
+name: phone
+namespace: default
+plural: phones
+version: v1

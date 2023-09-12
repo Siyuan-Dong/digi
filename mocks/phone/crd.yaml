@@ -1,0 +1,187 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: phones.mock.digi.dev
+spec:
+  group: mock.digi.dev
+  names:
+    kind: Phone
+    listKind: PhoneList
+    plural: phones
+    singular: phone
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        properties:
+          apiVersion:
+            type: string
+          kind:
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              egress:
+                properties:
+                  footprint:
+                    properties:
+                      driver_managed:
+                        type: boolean
+                      eoio:
+                        type: boolean
+                      flow:
+                        type: string
+                      pause:
+                        type: boolean
+                    type: object
+                  spl:
+                    properties:
+                      driver_managed:
+                        type: boolean
+                      eoio:
+                        type: boolean
+                      flow:
+                        type: string
+                      pause:
+                        type: boolean
+                    type: object
+                type: object
+              ingress:
+                properties:
+                  footprint:
+                    properties:
+                      eoio:
+                        type: boolean
+                      flow:
+                        type: string
+                      flow_agg:
+                        type: string
+                      patch_source:
+                        type: boolean
+                      pause:
+                        type: boolean
+                      source:
+                        items:
+                          properties:
+                            egress:
+                              type: string
+                            group:
+                              type: string
+                            kind:
+                              type: string
+                            name:
+                              type: string
+                            namespace:
+                              type: string
+                            version:
+                              type: string
+                          type: object
+                        type: array
+                      sources:
+                        items:
+                          type: string
+                        type: array
+                    type: object
+                type: object
+              meta:
+                properties:
+                  report_interval:
+                    type: number
+                type: object
+              mount:
+                properties:
+                  mock.digi.dev/v1/appliances:
+                    additionalProperties:
+                      properties:
+                        generation:
+                          type: number
+                        mode:
+                          type: string
+                        spec:
+                          properties:
+                            control:
+                              properties:
+                                power:
+                                  properties:
+                                    intent:
+                                      type: string
+                                    status:
+                                      type: string
+                                  type: object
+                              type: object
+                            egress:
+                              properties:
+                                energy:
+                                  properties:
+                                    eoio:
+                                      type: boolean
+                                    flow:
+                                      type: string
+                                  type: object
+                              type: object
+                            meta:
+                              properties:
+                                unit:
+                                  type: string
+                                wattage:
+                                  type: number
+                              type: object
+                            obs:
+                              properties:
+                                watt:
+                                  type: number
+                              type: object
+                          type: object
+                        status:
+                          type: string
+                      type: object
+                    type: object
+                  mock.digi.dev/v1/lamps:
+                    additionalProperties:
+                      properties:
+                        generation:
+                          type: number
+                        mode:
+                          type: string
+                        spec:
+                          properties:
+                            control:
+                              properties:
+                                brightness:
+                                  properties:
+                                    intent:
+                                      type: number
+                                    status:
+                                      type: number
+                                  type: object
+                                power:
+                                  properties:
+                                    intent:
+                                      type: string
+                                    status:
+                                      type: string
+                                  type: object
+                              type: object
+                            meta:
+                              properties:
+                                actuation_delay:
+                                  type: number
+                                gen_interval:
+                                  type: number
+                                managed:
+                                  type: boolean
+                                wattage:
+                                  type: number
+                              type: object
+                          type: object
+                        status:
+                          type: string
+                      type: object
+                    type: object
+                type: object
+            type: object
+        type: object
+    served: true
+    storage: true

@@ -1,0 +1,9 @@
+group: mock.digi.dev
+image: silveryfu/underdesk.v1.mock.digi.dev:latest
+imagepull: Always
+kind: Underdesk
+mounter: false
+name: underdesk
+namespace: default
+plural: underdesks
+version: v1

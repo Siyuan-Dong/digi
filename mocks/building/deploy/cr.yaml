@@ -1,0 +1,32 @@
+apiVersion: mock.digi.dev/v1
+kind: Building
+metadata:
+  name: {{ .Values.name }}
+spec:
+  meta:
+    managed: false
+    gen_interval: 5
+    seed: 42
+  ingress:
+    occupancy:
+      sources: [ kind:room@occupancy ]
+      flow: "sort -r event_ts | head" # at-most-once
+      flow_agg: |-
+        put total:=count() |
+        occupancy > 0 |
+        put building_occupancy:=cast(count(), <float64>)/total |
+        cut building_occupancy
+      eoio: false
+    room_occupancy:
+      sources: [ kind:room@occupancy ]
+      flow: ""
+      patch_source: true
+    energy:
+      sources: [ kind:any@energy ]
+      patch_source: true
+  egress:
+    energy:
+      flow: "watt | cut watt,event_ts"
+    occupancy:
+      flow: "building_occupancy | rename occupancy := building_occupancy"
+

@@ -30,12 +30,14 @@ class ZedPool(Pool):
     def __init__(self, name):
         super().__init__(name)
         self.client = digi.data.lake
+        self.schemas = dict()
 
     def load(self, objects: List[dict], *,
              branch="main",
              encoding="zjson",
              same_type=False):
         # update event and processing time
+        # logger.info(f"ZedPool: load")
         now = util.now()
         if encoding == "zjson":
             for o in objects:
@@ -44,7 +46,14 @@ class ZedPool(Pool):
                 if "event_ts" not in o:
                     o["event_ts"] = o.get("ts", now)
                 o["ts"] = now
+                # keys_ = o.keys()
+                # logger.info(f"ZedPool: object is {o}")
+                # logger.info(f"ZedPool: keys are {str(keys_)}, type is {type(keys_)}, {type(str(keys_))}")
+                # if keys_ not in self.schemas:
+                    # self.schemas.append(keys_)
+
             data = "".join(zjson.encode(objects))
+            # logger.info(f"ZedPool: data is {data}")
         elif encoding == "json":
             zjson_now = zjson.encode_datetime(now)  # as str
             for o in objects:
@@ -71,6 +80,7 @@ class ZedPool(Pool):
             self.lock.release()
 
     def query(self, query: str):
+        logger.info(f"ZedPool: query")
         if query != "":
             query = f"| {query}"
         query = f"from {self.name} {query}"

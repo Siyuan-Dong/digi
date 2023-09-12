@@ -1,0 +1,39 @@
+apiVersion: mock.digi.dev/v1
+kind: Multiscene
+metadata:
+  name: multiscene
+spec:
+  data:
+    output:
+      scenes:
+        s1:
+          objects:
+            - class: dog
+              location:
+                h: 179
+                w: 166
+                x1: 303
+                x2: 833
+              name: misc
+  meta:
+    scene_prefix: s
+    num_scene: 1
+    refresh_interval: 1
+    pause: false
+    object_config:
+      alice:
+        enter_prob: 0.5
+        leave_prob: 0.5
+        class: human
+      bob:
+        enter_prob: 0.2
+        leave_prob: 0.5
+        class: human
+      charlie:
+        enter_prob: 0.8
+        leave_prob: 0.5
+        class: human
+      dog:
+        enter_prob: 0.2
+        leave_prob: 0.1
+        class: dog

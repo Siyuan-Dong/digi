@@ -1,0 +1,15 @@
+apiVersion: mock.digi.dev/v1
+kind: Lamp
+metadata:
+  name: {{ .Values.name }}
+spec:
+  control:
+    power:
+      intent: "off"
+    brightness:
+      intent: 0.2
+  meta:
+    managed: false
+    gen_interval: -1
+    wattage: 12
+    actuation_delay: 0.1 # s

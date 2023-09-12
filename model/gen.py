@@ -160,6 +160,10 @@ properties:
     type: string 
   flow_agg:
     type: string
+  recon_policy:
+    items:
+      type: string
+    type: array
   eoio:
     type: boolean
   patch_source:
@@ -184,6 +188,12 @@ _egress_attr = """
 properties:
   flow:
     type: string 
+  schemas:
+    items:
+      items:
+        type: string
+      type: array
+    type: array
   eoio:
     type: boolean
   driver_managed:

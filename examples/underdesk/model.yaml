@@ -1,0 +1,11 @@
+group: example.digi.dev
+version: v1
+kind: Underdesk
+meta:
+  report_interval: number
+obs:
+  motion_detected: boolean
+  dbm: string
+  supply_voltage: string
+egress:
+  detected: object

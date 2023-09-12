@@ -1,0 +1,10 @@
+group: example.digi.dev
+image: siyuandong/lamp.v1.example.digi.dev:latest
+# image: silveryfu/lamp.v1.example.digi.dev:latest
+imagepull: Always
+kind: Lamp
+mounter: true
+name: lamp
+namespace: default
+plural: lamps
+version: v1

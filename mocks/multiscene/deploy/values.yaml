@@ -1,0 +1,8 @@
+group: mock.digi.dev
+image: silveryfu/multiscene.v1.mock.digi.dev:latest
+imagepull: Always
+mounter: false
+name: multiscene
+namespace: default
+plural: multiscenes
+version: v1

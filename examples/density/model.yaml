@@ -1,0 +1,10 @@
+group: example.digi.dev
+version: v1
+kind: Density
+meta:
+  report_interval: number
+obs:
+  count: number
+egress:
+  count: object
+  avg_count: object

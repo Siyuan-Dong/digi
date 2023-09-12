@@ -1,0 +1,8 @@
+group: mock.digi.dev
+image: silveryfu/roamspeaker.v1.mock.digi.dev:latest
+imagepull: Always
+mounter: false
+name: roamspeaker
+namespace: default
+plural: roamspeakers
+version: v1

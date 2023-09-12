@@ -1,0 +1,68 @@
+group: mock.digi.dev
+version: v1
+kind: Scene
+data:
+  input:
+    url: string
+    objects:
+      openapi:
+        items:
+          properties:
+            class:
+              type: string
+            name:
+              type: string
+            location:
+              properties:
+                h:
+                  type: number
+                w:
+                  type: number
+                x1:
+                  type: number
+                x2:
+                  type: number
+              type: object
+          type: object
+        type: array
+  output:
+    objects:
+      openapi:
+        items:
+          properties:
+            class:
+              type: string
+            name:
+              type: string
+            location:
+              properties:
+                h:
+                  type: number
+                w:
+                  type: number
+                x1:
+                  type: number
+                x2:
+                  type: number
+              type: object
+          type: object
+        type: array
+obs:
+  reason: string
+meta:
+  refresh_interval: number
+  mode: string
+  pause: boolean
+  object_config:
+    openapi:
+      additionalProperties:
+        properties:
+          enter_prob:
+            type: number
+          leave_prob:
+            type: number
+          class:
+            type: string
+        type: object
+      type: object
+

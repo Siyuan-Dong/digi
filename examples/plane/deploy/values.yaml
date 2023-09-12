@@ -1,0 +1,9 @@
+group: example.digi.dev
+image: silveryfu/plane.v1.example.digi.dev:latest
+imagepull: Always
+kind: Plane
+mounter: true
+name: plane
+namespace: default
+plural: planes
+version: v1

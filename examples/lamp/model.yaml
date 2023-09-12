@@ -1,0 +1,15 @@
+group: example.digi.dev
+version: v1
+kind: Lamp
+control:
+  power: string
+  brightness: number
+meta:
+  wattage: number
+  report_interval: number
+  auto_brightness: boolean
+egress:
+  data: object
+  energy: object
+mount:
+  mock.digi.dev/v1/lamps: object

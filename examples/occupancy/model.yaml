@@ -1,0 +1,11 @@
+group: example.digi.dev
+version: v1
+kind: Occupancy
+obs:
+  motion_detected: boolean
+  dbm: string
+  supply_voltage: string
+egress:
+  detected: object
+mount:
+  mock.digi.dev/v1/occupancies: object

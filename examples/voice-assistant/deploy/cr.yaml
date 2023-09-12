@@ -1,0 +1,5 @@
+apiVersion: example.digi.dev/v1
+kind: voice-assistant
+metadata:
+  name: {{ .Values.name }}
+spec: {}

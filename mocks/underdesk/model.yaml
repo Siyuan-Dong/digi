@@ -1,0 +1,12 @@
+group: mock.digi.dev
+version: v1
+kind: Underdesk
+meta:
+  gen_interval: number
+  managed: boolean
+  seed: number
+obs:
+  motion_detected: boolean
+  battery_level: number
+  supply_voltage: string
+  dbm: string

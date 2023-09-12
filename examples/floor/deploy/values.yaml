@@ -1,0 +1,9 @@
+group: example.digi.dev
+image: silveryfu/floor.v1.example.digi.dev:latest
+imagepull: Always
+kind: Floor
+mounter: true
+name: floor
+namespace: default
+plural: floors
+version: v1

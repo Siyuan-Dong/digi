@@ -1,0 +1,9 @@
+group: mock.digi.dev
+image: silveryfu/appliance.v1.mock.digi.dev:latest
+imagepull: Always
+kind: Appliance
+mounter: false
+name: appliance
+namespace: default
+plural: appliances
+version: v1

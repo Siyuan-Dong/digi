@@ -66,20 +66,29 @@ class Router:
 
 class Ingress:
     def __init__(self):
+        print(f"router: ingress init")
+        logger.info(f"router: ingress init")
         self._syncs = dict()
 
     def start(self):
+        logger.info(f"router: ingress start")
+        # print(f"router: ingress start")
         for name, _sync in self._syncs.items():
             _sync.start()
             logger.info(f"started ingress sync {name} "
                         f"with query: {_sync.query_str}")
 
     def stop(self):
+        print(f"router: ingress stop")
+        # logger.info(f"router: ingress stop")
         for _, _sync in self._syncs.items():
             _sync.stop()
 
     def update(self, config: dict):
+        print(f"router: ingress update")
+        # logger.info(f"router: ingress update")
         self._syncs = dict()
+        pool2gvr = digi.model.get_pool2gvr()
 
         for name, ig in config.items():
             if ig.get("pause", False):
@@ -105,6 +114,17 @@ class Ingress:
             # and the optional ingress-egress compatibility check in type.py
 
             # compile dataflow
+            policies = ig.get("recon_policy",[])
+
+            # if policies == []:
+            #     policy_flow = ""
+            # else:
+            #     policy_flow = f"switch ("
+            #     for policy in policies:
+            #         policy_flow+=f"case {policy} "
+
+            #     policy_flow+=   f") | "
+
             flow, flow_agg = ig.get("flow", ""), \
                 ig.get("flow_agg", "")
             if flow_agg == "":
@@ -112,6 +132,10 @@ class Ingress:
             else:
                 _out_flow = f"{flow_agg} | {flow_lib.refresh_ts}"
 
+            # logger.info(f"router: policy_flow is {policy_flow}")
+            # logger.info(f"router: flow is {flow}")
+            # flow = policy_flow + flow
+            # logger.info(f"router: policy_flow + flow is {flow}")
             # TBD add support for external pipelet
             # TBD disambiguate sync updates at fine-grained level
             # so that skip_history won't skip upon the config changes
@@ -143,7 +167,10 @@ class Ingress:
                     patch_source=ig.get("patch_source", False),
                     client=zed.Client(),
                     owner=digi.name,
-                    min_ts=util.now() if ig.get("skip_history", False) else util.min_time()
+                    min_ts=util.now() if ig.get("skip_history", False) else util.min_time(),
+                    policies=policies,
+                    pool2gvr=pool2gvr,
+                    is_ingress=True
                 )
                 self._syncs[name] = _sync
 
@@ -157,19 +184,27 @@ class Egress:
     INIT = {"__meta": "init"}
 
     def __init__(self):
+        print(f"router: egress init")
+        logger.info(f"router: egress init")
         self._syncs = dict()
 
     def start(self):
+        # print(f"router: egress start")
+        logger.info(f"router: egress start")
         for name, _sync in self._syncs.items():
             _sync.start()
             logger.info(f"started egress sync {name} "
                         f"with query:\n{_sync.query_str}")
 
     def stop(self):
+        # logger.info(f"router: egress stop")
+        print(f"router: egress stop")
         for _, _sync in self._syncs.items():
             _sync.stop()
 
     def update(self, config: dict):
+        # logger.info(f"router: egress update")
+        print(f"router: egress update")
         self._syncs = dict()
 
         for name, eg in config.items():
