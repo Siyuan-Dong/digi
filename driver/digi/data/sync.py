@@ -10,7 +10,6 @@ from collections import defaultdict
 from digi.data import logger
 import digi.data.reconcile as reconcile
 import digi
-# import digi.data.reconcile as reconcile
 
 from . import zed, zjson
 
@@ -53,7 +52,6 @@ class Sync(threading.Thread):
         self.in_flow = in_flow  # TBD multi-in_flow
         self.out_flow = out_flow
         self.poll_interval = poll_interval
-        # self.owner = owner
         self.patch_source = patch_source
         # if eoio enabled, the sync agent will
         # process only those records that contain
@@ -65,19 +63,12 @@ class Sync(threading.Thread):
         self.min_ts = min_ts  # min ts to sync
         self.source_set = set(self.sources)
         self.query_str = self._make_query()
-        # self.policies = []
-        # self.policies = policies
-        # self.policy_keys = []
-        # for policy in policies:
-        #     self.policy_keys.append(extract_key(policy))
 
 
         threading.Thread.__init__(self)
         self._stop_flag = threading.Event()
         self._stop_flag.set()
 
-        # print(f"sync: init dest:{self.dest}")
-        # logger.info(f"sync: init dest:{self.dest}")
 
     def run(self):
         # print(f"sync: run")
@@ -105,8 +96,6 @@ class Sync(threading.Thread):
         records = self.read()
         for record in records:
             logger.info(f"sync: record received {record} {self.sources}--{self.dest}--{self.owner}")
-            # tmp = self.client.query(f"typeof({record})")
-            # logger.info(f"sync: record type {tmp}")
         if len(records) != 0:
             self.load(records)
 
@@ -136,22 +125,11 @@ class Sync(threading.Thread):
 
     def load(self, records: list):
         # print(f"sync: load")
-        # logger.info(f"sync: load {list(records[0].keys())}, type is {type(list(records[0].keys()))}")
         dest_pool, dest_branch = self._denormalize_one(self.dest)
 
         if not self.is_ingress:
-            tp1, tp2, tp3 = digi.util.get_spec(digi.g, digi.v, digi.r, dest_pool, "default")
-            schemas = tp1['egress'][dest_branch]['schemas']
-            logger.info(f"sync: load {self.sources}--{self.dest}--{self.owner}, schemas are {schemas}")
-
-            for record in records:
-                if list(record.keys()) not in schemas:
-                    logger.info(f"sync: load {self.sources}--{self.dest}--{self.owner} schema of {self.dest} add {list(record.keys())}")
-                    schemas.append(list(record.keys()))
-            tp1['egress'][dest_branch]['schemas'] = schemas
-            resp, e = digi.util.patch_spec(digi.g, digi.v, digi.r, dest_pool, "default", tp1, rv=tp2)
-            if e is not None:
-                logger.warning(f"sync: load {self.sources}--{self.dest}--{self.owner} fail to update schemas {schemas}")
+            reconcile.update_schemas(records, self.sources[0], self.dest)
+            
 
         records = "\n".join(zjson.encode(records))
         # dest_pool, dest_branch = self._denormalize_one(self.dest)
@@ -184,43 +162,12 @@ class Sync(threading.Thread):
             time.sleep(self.poll_interval)
 
     def _make_query(self) -> str:
-        # print(f"sync: make query")
-        # logger.info(f"sync: make query {self.sources}--{self.dest}--{self.owner} schemas of {digi.pool.name} are {digi.pool.schemas[self.dest]}")
-        # logger.info(f"sync: make query {self.sources}--{self.dest}--{self.owner} policies are {self.policies}")
-        # recon_flow = f"switch ("
-        # for policy in self.policies:
-        #     policy_key = extract_key(policy)
-        #     for schema in digi.pool.schemas[self.dest]:
-        #         if policy_key in schema:
-        #             recon_flow += f"case {policy} "
-        #             break
-        # if recon_flow == f"switch (":
-        #     new_in_flow = self.in_flow
-        # else:
-        #     new_in_flow = recon_flow + ") | " + self.in_flow
-        # logger.info(f"sync: make query {self.sources}--{self.dest}--{self.owner} new_in_flow {new_in_flow}")
         new_in_flow = self.in_flow
 
         in_str = "from (\n"
         for source in self.sources:
             if self.is_ingress:
                 new_in_flow = reconcile.generate_reconcile_flow(self.in_flow, source, self.dest, self.pool2gvr, self.policies)
-                # source_pool, source_branch = self._denormalize_one(source)
-                # g, v, r = self.pool2gvr[source_pool].split("/")
-                # tp1, tp2, tp3 = digi.util.get_spec(g, v, r, source_pool, "default")
-                # logger.info(f"sync: make query {self.sources}--{self.dest}--{self.owner}, spec of {source} is {tp1}")
-                # schemas = tp1['egress'][source_branch]['schemas']
-                # logger.info(f"sync: make query {self.sources}--{self.dest}--{self.owner} schemas of {source} are {schemas}")
-                # logger.info(f"sync: make query {self.sources}--{self.dest}--{self.owner} policies are {self.policies}")
-                # recon_flow = f"switch ("
-                # for policy in self.policies:
-                #     policy_key = reconcile.extract_key(policy)
-                #     for schema in schemas:
-                #         if policy_key in schema:
-                #             recon_flow += f"case {policy} "
-                #             break
-                # if recon_flow != f"switch (":
-                #     new_in_flow = recon_flow + ") | " + self.in_flow
             logger.info(f"sync: make query {self.sources}--{self.dest}--{self.owner} new_in_flow {new_in_flow}")
 
             cur_ts = max(self.source_ts.get(source, self.min_ts), self.min_ts)

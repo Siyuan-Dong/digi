@@ -116,14 +116,6 @@ class Ingress:
             # compile dataflow
             policies = ig.get("recon_policy",[])
 
-            # if policies == []:
-            #     policy_flow = ""
-            # else:
-            #     policy_flow = f"switch ("
-            #     for policy in policies:
-            #         policy_flow+=f"case {policy} "
-
-            #     policy_flow+=   f") | "
 
             flow, flow_agg = ig.get("flow", ""), \
                 ig.get("flow_agg", "")
@@ -132,10 +124,6 @@ class Ingress:
             else:
                 _out_flow = f"{flow_agg} | {flow_lib.refresh_ts}"
 
-            # logger.info(f"router: policy_flow is {policy_flow}")
-            # logger.info(f"router: flow is {flow}")
-            # flow = policy_flow + flow
-            # logger.info(f"router: policy_flow + flow is {flow}")
             # TBD add support for external pipelet
             # TBD disambiguate sync updates at fine-grained level
             # so that skip_history won't skip upon the config changes
