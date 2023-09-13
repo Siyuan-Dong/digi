@@ -1,9 +1,0 @@
-group: example.digi.dev
-image: silveryfu/building.v1.example.digi.dev:latest
-imagepull: Always
-kind: Building
-mounter: true
-name: building
-namespace: default
-plural: buildings
-version: v1

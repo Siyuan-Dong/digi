@@ -1,9 +1,0 @@
-group: mock.digi.dev
-image: silveryfu/ship.v1.mock.digi.dev:latest
-imagepull: Always
-kind: Ship
-mounter: true
-name: ship
-namespace: default
-plural: ships
-version: v1

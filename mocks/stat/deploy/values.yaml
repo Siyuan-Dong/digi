@@ -1,8 +1,0 @@
-group: mock.digi.dev
-image: silveryfu/stat.v1.mock.digi.dev:latest
-imagepull: Always
-mounter: false
-name: stat
-namespace: default
-plural: stats
-version: v1

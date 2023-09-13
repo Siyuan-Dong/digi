@@ -1,5 +1,0 @@
-apiVersion: mock.digi.dev/v1
-kind: voice-assistant
-metadata:
-  name: voice-assistant
-spec: {}

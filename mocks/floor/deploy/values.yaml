@@ -1,9 +1,0 @@
-group: mock.digi.dev
-image: silveryfu/floor.v1.mock.digi.dev:latest
-imagepull: Always
-kind: Floor
-mounter: true
-name: floor
-namespace: default
-plural: floors
-version: v1

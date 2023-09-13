@@ -1,9 +1,0 @@
-group: mock.digi.dev
-image: silveryfu/group.v1.mock.digi.dev:latest
-imagepull: Always
-kind: Group
-mounter: true
-name: group
-namespace: default
-plural: groups
-version: v1

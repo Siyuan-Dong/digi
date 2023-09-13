@@ -1,9 +1,0 @@
-group: example.digi.dev
-image: silveryfu/cargo.v1.example.digi.dev:latest
-imagepull: Always
-kind: Cargo
-mounter: false
-name: cargo
-namespace: default
-plural: cargos
-version: v1

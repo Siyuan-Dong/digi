@@ -1,9 +1,0 @@
-group: example.digi.dev
-image: silveryfu/hvac.v1.example.digi.dev:latest
-imagepull: Always
-kind: Hvac
-mounter: false
-name: hvac
-namespace: default
-plural: hvacs
-version: v1

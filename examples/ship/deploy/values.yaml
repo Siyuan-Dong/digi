@@ -1,9 +1,0 @@
-group: example.digi.dev
-image: silveryfu/ship.v1.example.digi.dev:latest
-imagepull: Always
-kind: Ship
-mounter: true
-name: ship
-namespace: default
-plural: ships
-version: v1

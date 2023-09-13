@@ -1,9 +1,0 @@
-group: example.digi.dev
-image: silveryfu/density.v1.example.digi.dev:latest
-imagepull: Always
-kind: Density
-mounter: false
-name: density
-namespace: default
-plural: densities
-version: v1

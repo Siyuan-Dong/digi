@@ -1,5 +1,0 @@
-group: mock.digi.dev
-version: v1
-kind: Plane
-mount:
-  mock.digi.dev/v1/cargos: object

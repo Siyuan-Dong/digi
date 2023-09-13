@@ -1,8 +1,0 @@
-group: mock.digi.dev
-image: silveryfu/plug.v1.mock.digi.dev:latest
-imagepull: Always
-mounter: false
-name: plug
-namespace: default
-plural: plugs
-version: v1

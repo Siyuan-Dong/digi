@@ -1,5 +1,0 @@
-apiVersion: example.digi.dev/v1
-kind: Office
-metadata:
-  name: {{ .Values.name }}
-spec: {}

@@ -1,9 +1,0 @@
-group: example.digi.dev
-image: silveryfu/plug.v1.example.digi.dev:latest
-imagepull: Always
-kind: Plug
-mounter: false
-name: plug
-namespace: default
-plural: plugs
-version: v1

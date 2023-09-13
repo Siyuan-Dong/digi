@@ -1,5 +1,0 @@
-apiVersion: example.digi.dev/v1
-kind: Humidifier
-metadata:
-  name: humidifier
-spec: {}

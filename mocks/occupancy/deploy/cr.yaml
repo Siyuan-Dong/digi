@@ -1,8 +1,0 @@
-apiVersion: mock.digi.dev/v1
-kind: Occupancy
-metadata:
-  name: {{ .Values.name }}
-spec:
-  meta:
-    managed: false
-    gen_interval: 3

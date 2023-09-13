@@ -1,5 +1,0 @@
-apiVersion: example.digi.dev/v1
-kind: Plane
-metadata:
-  name: plane
-spec: {}

@@ -1,5 +1,0 @@
-apiVersion: digi.dev/v1
-kind: doorlock
-metadata:
-  name: {{ .Values.name }}
-spec: {}

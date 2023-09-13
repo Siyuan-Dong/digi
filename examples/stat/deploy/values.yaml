@@ -1,9 +1,0 @@
-group: example.digi.dev
-image: silveryfu/stat.v1.example.digi.dev:latest
-imagepull: Always
-kind: stat
-mounter: false
-name: stat
-namespace: default
-plural: stats
-version: v1

@@ -1,9 +1,0 @@
-group: example.digi.dev
-image: jamsheedmistri/digiphone.v1.example.digi.dev:latest
-imagepull: Always
-kind: Digiphone
-mounter: false
-name: digiphone
-namespace: default
-plural: digiphones
-version: v1

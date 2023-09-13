@@ -1,7 +1,0 @@
-group: mock.digi.dev
-version: v1
-kind: Port
-egress:
-  delay: object
-mount:
-  mock.digi.dev/v1/ships: object

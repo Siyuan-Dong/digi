@@ -1,9 +1,0 @@
-group: example.digi.dev
-image: silveryfu/occupancy.v1.example.digi.dev:latest
-imagepull: Always
-kind: Occupancy
-mounter: true
-name: occupancy
-namespace: default
-plural: occupancies
-version: v1

@@ -1,9 +1,0 @@
-group: mock.digi.dev
-image: silveryfu/lamp.v1.mock.digi.dev:latest
-imagepull: Always
-kind: Lamp
-mounter: false
-name: lamp
-namespace: default
-plural: lamps
-version: v1

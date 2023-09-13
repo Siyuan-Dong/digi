@@ -1,8 +1,0 @@
-group: mock.digi.dev
-image: silveryfu/home.v1.mock.digi.dev:latest
-imagepull: Always
-mounter: true
-name: home
-namespace: default
-plural: homes
-version: v1

@@ -1,9 +1,0 @@
-group: example.digi.dev
-image: silveryfu/airport.v1.example.digi.dev:latest
-imagepull: Always
-kind: Airport
-mounter: true
-name: airport
-namespace: default
-plural: airports
-version: v1

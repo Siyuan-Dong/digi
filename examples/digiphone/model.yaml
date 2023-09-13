@@ -1,6 +1,0 @@
-group: example.digi.dev
-version: v1
-kind: Digiphone
-egress:
-  location: object
-  network: object

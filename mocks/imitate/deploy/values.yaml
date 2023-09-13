@@ -1,8 +1,0 @@
-group: mock.digi.dev
-image: silveryfu/imitate.v1.mock.digi.dev:latest
-imagepull: Always
-mounter: false
-name: imitate
-namespace: default
-plural: imitates
-version: v1

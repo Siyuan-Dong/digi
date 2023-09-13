@@ -1,8 +1,0 @@
-group: mock.digi.dev
-image: silveryfu/hvac.v1.mock.digi.dev:latest
-imagepull: Always
-mounter: false
-name: hvac
-namespace: default
-plural: hvacs
-version: v1

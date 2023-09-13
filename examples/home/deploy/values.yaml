@@ -1,9 +1,0 @@
-group: example.digi.dev
-image: silveryfu/home.v1.example.digi.dev:latest
-imagepull: Always
-kind: Home
-mounter: true
-name: home
-namespace: default
-plural: homes
-version: v1

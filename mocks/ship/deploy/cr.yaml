@@ -1,5 +1,0 @@
-apiVersion: mock.digi.dev/v1
-kind: Ship
-metadata:
-  name: {{ .Values.name }}
-spec: {}

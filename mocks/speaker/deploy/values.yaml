@@ -1,8 +1,0 @@
-group: mock.digi.dev
-image: silveryfu/speaker.v1.mock.digi.dev:latest
-imagepull: Always
-mounter: false
-name: speaker
-namespace: default
-plural: speakers
-version: v1

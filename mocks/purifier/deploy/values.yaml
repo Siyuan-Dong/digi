@@ -1,8 +1,0 @@
-group: mock.digi.dev
-image: silveryfu/purifier.v1.mock.digi.dev:latest
-imagepull: Always
-mounter: false
-name: purifier
-namespace: default
-plural: purifiers
-version: v1

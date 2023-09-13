@@ -1,5 +1,0 @@
-group: mock.digi.dev
-version: v1
-kind: Ship
-mount:
-  mock.digi.dev/v1/cargos: object

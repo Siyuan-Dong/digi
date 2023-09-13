@@ -1,9 +1,0 @@
-group: example.digi.dev
-image: silveryfu/imitate.v1.example.digi.dev:latest
-imagepull: Always
-kind: Imitate
-mounter: false
-name: imitate
-namespace: default
-plural: imitates
-version: v1

@@ -1,9 +1,0 @@
-group: example.digi.dev
-image: silveryfu/campus.v1.example.digi.dev:latest
-imagepull: Always
-kind: Campus
-mounter: true
-name: campus
-namespace: default
-plural: campuses
-version: v1

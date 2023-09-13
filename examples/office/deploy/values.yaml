@@ -1,9 +1,0 @@
-group: example.digi.dev
-image: silveryfu/office.v1.example.digi.dev:latest
-imagepull: Always
-kind: Office
-mounter: true
-name: office
-namespace: default
-plural: offices
-version: v1

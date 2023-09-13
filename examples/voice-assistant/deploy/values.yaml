@@ -1,9 +1,0 @@
-group: example.digi.dev
-image: silveryfu/voice-assistant.v1.example.digi.dev:latest
-imagepull: Always
-kind: Voice-assistant
-mounter: false
-name: voice-assistant
-namespace: default
-plural: voice-assistants
-version: v1

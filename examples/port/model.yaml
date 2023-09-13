@@ -1,7 +1,0 @@
-group: example.digi.dev
-version: v1
-kind: Port
-egress:
-  delay: object
-mount:
-  example.digi.dev/v1/ships: object

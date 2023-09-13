@@ -1,9 +1,0 @@
-group: mock.digi.dev
-image: silveryfu/cargo.v1.mock.digi.dev:latest
-imagepull: Always
-kind: Cargo
-mounter: false
-name: cargo
-namespace: default
-plural: cargos
-version: v1

@@ -1,5 +1,0 @@
-apiVersion: example.digi.dev/v1
-kind: Floor
-metadata:
-  name: floor
-spec: {}

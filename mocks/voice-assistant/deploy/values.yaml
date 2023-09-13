@@ -1,8 +1,0 @@
-group: mock.digi.dev
-image: silveryfu/voice-assistant.v1.mock.digi.dev:latest
-imagepull: Always
-mounter: false
-name: voice-assistant
-namespace: default
-plural: voice-assistants
-version: v1

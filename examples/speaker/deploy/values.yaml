@@ -1,9 +1,0 @@
-group: example.digi.dev
-image: silveryfu/speaker.v1.example.digi.dev:latest
-imagepull: Always
-kind: speaker
-mounter: false
-name: speaker
-namespace: default
-plural: speakers
-version: v1

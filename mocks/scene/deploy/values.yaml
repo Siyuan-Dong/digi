@@ -1,9 +1,0 @@
-group: mock.digi.dev
-image: silveryfu/scene.v1.mock.digi.dev:latest
-imagepull: Always
-kind: Scene
-mounter: false
-name: scene
-namespace: default
-plural: scenes
-version: v1
