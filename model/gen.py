@@ -164,6 +164,12 @@ properties:
     items:
       type: string
     type: array
+  schemas:
+    items:
+      items:
+        type: string
+      type: array
+    type: array
   eoio:
     type: boolean
   patch_source:

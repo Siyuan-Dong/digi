@@ -8,3 +8,4 @@ pandas
 pyzed
 paho-mqtt
 websockets
+twilio

@@ -36,6 +36,7 @@ class Sync(threading.Thread):
                  client: zed.Client = None,
                  min_ts: datetime = datetime.min.replace(tzinfo=timezone.utc),
                  policies: list = [],
+                 ingress_schemas: list = [],
                  pool2gvr: dict = dict(),
                  is_ingress: bool = False
                  ):
@@ -45,10 +46,11 @@ class Sync(threading.Thread):
         logger.info(f"sync: init before")
         digi.pool.schemas[self.dest]=[]
         self.policies = policies
+        self.ingress_schemas = ingress_schemas
         self.owner = owner
         self.pool2gvr = pool2gvr
         self.is_ingress = is_ingress
-        logger.info(f"sync: init after {self.sources}--{self.dest}--{self.owner}, pool2gvr is {pool2gvr}")
+        # logger.info(f"sync: init after {self.sources}--{self.dest}--{self.owner}, pool2gvr is {pool2gvr}")
         self.in_flow = in_flow  # TBD multi-in_flow
         self.out_flow = out_flow
         self.poll_interval = poll_interval
@@ -64,6 +66,8 @@ class Sync(threading.Thread):
         self.source_set = set(self.sources)
         self.query_str = self._make_query()
 
+        self.time_end=time.time()
+        logger.info(f"sync: init after {self.sources}--{self.dest}--{self.owner}, pool2gvr is {pool2gvr}, time_end is {self.time_end}")
 
         threading.Thread.__init__(self)
         self._stop_flag = threading.Event()
@@ -105,6 +109,9 @@ class Sync(threading.Thread):
         records = list()
         if self.eoio:
             self.query_str = self._make_query()
+
+        # add a timestamp
+
         logger.info(f"sync: read query {self.eoio} {self.query_str} {self.sources}--{self.dest}--{self.owner}")
         for r in self.client.query(self.query_str):
             logger.info(f"sync: r {r} {self.sources}--{self.dest}--{self.owner}")
@@ -167,7 +174,7 @@ class Sync(threading.Thread):
         in_str = "from (\n"
         for source in self.sources:
             if self.is_ingress:
-                new_in_flow = reconcile.generate_reconcile_flow(self.in_flow, source, self.dest, self.pool2gvr, self.policies)
+                new_in_flow = reconcile.generate_reconcile_flow(self.in_flow, source, self.dest, self.pool2gvr, self.policies, self.ingress_schemas)
             logger.info(f"sync: make query {self.sources}--{self.dest}--{self.owner} new_in_flow {new_in_flow}")
 
             cur_ts = max(self.source_ts.get(source, self.min_ts), self.min_ts)

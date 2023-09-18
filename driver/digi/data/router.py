@@ -6,6 +6,7 @@ import digi.data.sourcer as sourcer
 from digi.data import logger, zed, util
 from digi.data import flow as flow_lib
 
+import time
 import yaml
 from kubernetes.client.rest import ApiException
 from kubernetes import config, client
@@ -101,6 +102,11 @@ class Ingress:
             use_sourcer = ig.get("use_sourcer", False)
             pipelet_offload = ig.get("offload", False)
 
+            # add a timestamp
+            time_start=time.time()
+            logger.info(f"router: time_start of {name} is {time_start}")
+
+
             # concat and dedup sources
             for s in source_quantifiers:
                 sources += sourcer.resolve(s, use_sourcer)
@@ -115,6 +121,7 @@ class Ingress:
 
             # compile dataflow
             policies = ig.get("recon_policy",[])
+            schemas = ig.get("schemas",[])
 
 
             flow, flow_agg = ig.get("flow", ""), \
@@ -157,9 +164,11 @@ class Ingress:
                     owner=digi.name,
                     min_ts=util.now() if ig.get("skip_history", False) else util.min_time(),
                     policies=policies,
+                    ingress_schemas=schemas,
                     pool2gvr=pool2gvr,
                     is_ingress=True
                 )
+                logger.info(f"router: time consumed for JIT compilation of {name} is {_sync.time_end - time_start}")
                 self._syncs[name] = _sync
 
     def restart(self, config: dict):

@@ -1,6 +1,11 @@
 FROM python:3.8
 WORKDIR /src/
 
+ENV HTTP_PROXY "http://127.0.0.1:3001"
+ENV HTTP_PROXY "http://127.0.0.1:3001"
+ENV FTP_PROXY "ftp://127.0.0.1:3001"
+ENV NO_PROXY "*.test.example.com,.example2.com"
+
 # TBD multi-stage build with slim base image
 RUN git clone https://github.com/silveryfu/kopf.git && \
     cd kopf && git checkout digi && pip install -e .
